@@ -41,9 +41,9 @@ const LeadForm = dynamic(() => import('@/components/forms/LeadForm'), {
 
 export default async function Home() {
   // Fetch content for home page
-  let services = [];
-  let reviews = [];
-  let articles = [];
+  let services: any = [];
+  let reviews: any = [];
+  let articles: any = [];
 
   try {
     [services, reviews, articles] = await Promise.all([
@@ -94,7 +94,7 @@ export default async function Home() {
           {featuredServices.length > 0 ? (
             <>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                {featuredServices.map((service) => (
+                {featuredServices.map((service: any) => (
                   <ServiceCardSimple
                     key={service.id}
                     slug={service.slug}
@@ -146,7 +146,7 @@ export default async function Home() {
           {featuredReviews.length > 0 ? (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                {featuredReviews.map((review) => (
+                {featuredReviews.map((review: any) => (
                   <ReviewCardSimple
                     key={review.id}
                     slug={review.slug}
@@ -202,7 +202,7 @@ export default async function Home() {
           {featuredArticles.length > 0 ? (
             <>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                {featuredArticles.map((article) => (
+                {featuredArticles.map((article: any) => (
                   <ArticleCardSimple
                     key={article.id}
                     slug={article.slug}
