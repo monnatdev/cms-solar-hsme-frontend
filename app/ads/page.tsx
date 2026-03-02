@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Calculator, Phone, CheckCircle, Star, TrendingUp, Shield, Clock, Award, Sun, Mail, MapPin } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import './ads-styles.css';
+import SectionCTA from '@/components/ads/SectionCTA';
 
 // Dynamically import heavy components
 const SimpleCalculator = dynamic(() => import('@/components/ads/SimpleCalculator'), {
@@ -243,6 +244,8 @@ export default function AdsLandingPage() {
                 และพร้อมแก้ไขให้คุณด้วยมาตรฐานการทำงานที่ชัดเจน โปร่งใส
               </p>
             </div>
+
+            <SectionCTA />
           </div>
         </section>
 
@@ -301,6 +304,8 @@ export default function AdsLandingPage() {
                 </div>
               ))}
             </div>
+
+            <SectionCTA />
           </div>
         </section>
 
@@ -420,6 +425,8 @@ export default function AdsLandingPage() {
                 </div>
               ))}
             </div>
+
+            <SectionCTA />
           </div>
         </section>
 
@@ -578,6 +585,8 @@ export default function AdsLandingPage() {
                 </div>
               </div>
             </div>
+
+            <SectionCTA />
           </div>
         </section>
 
@@ -653,6 +662,8 @@ export default function AdsLandingPage() {
                 </div>
               ))}
             </div>
+
+            <SectionCTA />
           </div>
         </section>
 
@@ -670,6 +681,8 @@ export default function AdsLandingPage() {
               </div>
 
               <SimpleCalculator />
+
+              <SectionCTA />
             </div>
           </div>
         </section>
@@ -738,6 +751,8 @@ export default function AdsLandingPage() {
                 </div>
               ))}
             </div>
+
+            <SectionCTA />
           </div>
         </section>
 
@@ -826,6 +841,8 @@ export default function AdsLandingPage() {
                   </details>
                 ))}
               </div>
+
+              <SectionCTA />
             </div>
           </div>
         </section>
