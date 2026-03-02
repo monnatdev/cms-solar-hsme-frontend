@@ -1,0 +1,114 @@
+/* Enhanced Ads Page Styles */
+
+/* Section Background Patterns */
+.section-pattern-dots {
+  background-image: radial-gradient(circle, #f97316 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.05;
+}
+
+.section-pattern-grid {
+  background-image: 
+    linear-gradient(to right, #f9731620 1px, transparent 1px),
+    linear-gradient(to bottom, #f9731620 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Gradient Backgrounds */
+.bg-gradient-orange-light {
+  background: linear-gradient(135deg, #fff7ed 0%, #ffffff 50%, #ffedd5 100%);
+}
+
+.bg-gradient-red-light {
+  background: linear-gradient(135deg, #fef2f2 0%, #fff7ed 50%, #fef2f2 100%);
+}
+
+.bg-gradient-blue-light {
+  background: linear-gradient(135deg, #eff6ff 0%, #ffffff 50%, #dbeafe 100%);
+}
+
+.bg-gradient-green-light {
+  background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 50%, #dcfce7 100%);
+}
+
+/* Card Enhancements */
+.card-hover-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Section Dividers */
+.section-divider {
+  position: relative;
+}
+
+.section-divider::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #f97316, transparent);
+  border-radius: 2px;
+}
+
+/* Animated Gradient Text */
+.gradient-text-animated {
+  background: linear-gradient(90deg, #f97316, #fb923c, #f97316);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+}
+
+/* Glass morphism effect */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Pulse animation for badges */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(249, 115, 22, 0);
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
