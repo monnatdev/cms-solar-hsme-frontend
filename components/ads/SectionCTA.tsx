@@ -2,7 +2,7 @@ import { Phone } from 'lucide-react';
 
 export default function SectionCTA() {
   return (
-    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8 pt-8 border-t border-gray-200">
+    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8 pt-8">
       <a
         href="tel:0960415198"
         className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 rounded-xl hover:from-orange-500 hover:via-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"

@@ -307,16 +307,6 @@ export default function SolarCalculator() {
                     คุณภาพอุปกรณ์ และปัจจัยอื่นๆ กรุณาติดต่อเราเพื่อรับคำปรึกษาและใบเสนอราคาที่แม่นยำ
                   </p>
                 </div>
-
-                {/* CTA Button */}
-                <div className="mt-6 text-center">
-                  <a
-                    href="#contact"
-                    className="inline-flex items-center justify-center px-8 py-3 text-lg font-semibold text-white bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 rounded-lg hover:from-orange-500 hover:via-orange-600 hover:to-orange-700 transition-all duration-200 shadow-lg hover:shadow-xl"
-                  >
-                    ติดต่อขอใบเสนอราคา
-                  </a>
-                </div>
               </div>
             )}
           </div>

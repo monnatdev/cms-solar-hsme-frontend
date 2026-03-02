@@ -16,12 +16,12 @@ const LeadForm = dynamic(() => import('@/components/forms/LeadForm'), {
 });
 
 export const metadata: Metadata = {
-  title: 'ติดตั้งโซล่าเซลล์ ลดค่าไฟ 50-80% | รับประกัน 25 ปี | SolarPro',
-  description: 'ติดตั้งโซล่าเซลล์คุณภาพสูง ลดค่าไฟได้จริง 50-80% คืนทุนเร็ว 4-6 ปี รับประกัน 25 ปี ปรึกษาฟรี โทร 096-041-5198',
+  title: 'ติดตั้งโซล่าเซลล์ ลดค่าไฟ 50-80% | รับประกันอุปกรณ์สูงสุด 30 ปี | SolarPro',
+  description: 'ติดตั้งโซล่าเซลล์คุณภาพสูง ลดค่าไฟได้จริง 50-80% คืนทุนเร็ว 4-6 ปี รับประกันอุปกรณ์สูงสุด 30 ปี ปรึกษาฟรี โทร 096-041-5198',
   keywords: 'โซล่าเซลล์, ติดตั้งโซล่าเซลล์, ราคาโซล่าเซลล์, solar cell, ลดค่าไฟ',
   openGraph: {
-    title: 'ติดตั้งโซล่าเซลล์ ลดค่าไฟ 50-80% | รับประกัน 25 ปี',
-    description: 'ติดตั้งโซล่าเซลล์คุณภาพสูง ลดค่าไฟได้จริง คืนทุนเร็ว รับประกัน 25 ปี',
+    title: 'ติดตั้งโซล่าเซลล์ ลดค่าไฟ 50-80% | รับประกันอุปกรณ์สูงสุด 30 ปี',
+    description: 'ติดตั้งโซล่าเซลล์คุณภาพสูง ลดค่าไฟได้จริง คืนทุนเร็ว รับประกันอุปกรณ์สูงสุด 30 ปี',
     type: 'website',
   },
 };
@@ -58,103 +58,102 @@ export default function AdsLandingPage() {
 
       <div className="min-h-screen bg-white">
         {/* Hero Section - Above the Fold */}
-        <section className="relative pt-8 pb-16 md:pb-24 bg-gray-50">
-          <div className="container mx-auto px-6 md:px-12">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              {/* Left: Headline & CTA */}
-              <div className="space-y-6">
-                {/* Trust Badge */}
-                <div className="inline-flex items-center gap-2 bg-orange-50 px-4 py-2 rounded-full border border-orange-200">
-                  <Award className="w-5 h-5 text-orange-500" />
-                  <span className="text-sm font-medium text-gray-900">ผู้นำด้านโซล่าเซลล์ในไทย</span>
-                </div>
+               {/* Hero Section - Above the Fold */}
+        <section className="relative pt-8 pb-16 md:pb-24 min-h-[600px] md:min-h-[700px] flex items-center">
+          {/* Background Image with Overlay */}
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=2072&auto=format&fit=crop"
+              alt="ติดตั้งโซล่าเซลล์บนหลังคา"
+              fill
+              className="object-cover"
+              priority
+              sizes="100vw"
+            />
+            {/* Dark overlay for text readability */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/60 to-black/50"></div>
+          </div>
 
-                {/* Main Headline */}
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                  ลดค่าไฟ <span className="text-orange-500">50-80%</span>
-                  <br />
-                  ด้วยโซล่าเซลล์คุณภาพสูง
-                </h1>
-
-                {/* Sub-headline */}
-                <p className="text-xl text-gray-600 leading-relaxed">
-                  คืนทุนเร็ว 4-6 ปี • รับประกัน 25 ปี
-                  <br />
-                  ติดตั้งง่าย ใช้งานได้ทันที
-                </p>
-
-                {/* Key Benefits */}
-                <div className="grid grid-cols-2 gap-3">
-                  {[
-                    { icon: TrendingUp, text: 'ประหยัดค่าไฟทันที' },
-                    { icon: Shield, text: 'รับประกันยาวนาน' },
-                    { icon: Clock, text: 'ติดตั้งเร็ว 1-2 วัน' },
-                    { icon: Award, text: 'มาตรฐานสากล' },
-                  ].map((benefit, index) => (
-                    <div key={index} className="flex items-center gap-2 text-gray-700">
-                      <benefit.icon className="w-5 h-5 text-orange-500 flex-shrink-0" />
-                      <span className="text-sm font-medium">{benefit.text}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* LINE OA CTA Button */}
-                <div className="pt-4">
-                  <a
-                    href="https://line.me/R/ti/p/@solarpro"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-[#06C755] rounded-lg hover:bg-[#05b34b] transition-all duration-300 shadow-lg hover:shadow-xl"
-                  >
-                    <svg className="w-6 h-6 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
-                    </svg>
-                    ปรึกษาฟรีทาง LINE
-                  </a>
-                </div>
-
-                {/* Social Proof */}
-                <div className="flex items-center gap-6 pt-4 text-sm text-gray-600">
-                  <div className="flex items-center gap-2">
-                    <span className="font-semibold text-gray-900">500+</span> ลูกค้าพึงพอใจ
-                  </div>
-                  <div className="flex items-center gap-1">
-                    {[1, 2, 3, 4, 5].map((i) => (
-                      <Star key={i} className="w-4 h-4 fill-orange-400 text-orange-400" />
-                    ))}
-                    <span className="ml-1">4.9/5</span>
-                  </div>
-                </div>
+          <div className="container mx-auto px-6 md:px-12 relative z-10">
+            <div className="max-w-4xl">
+              {/* Trust Badge */}
+              <div className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full border-2 border-orange-200 shadow-lg mb-6">
+                <Award className="w-5 h-5 text-orange-500" />
+                <span className="text-sm font-medium text-gray-900">ผู้นำด้านโซล่าเซลล์ในไทย</span>
               </div>
 
-              {/* Right: Hero Image */}
-              <div className="relative">
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
-                  <Image
-                    src="https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=2072&auto=format&fit=crop"
-                    alt="ติดตั้งโซล่าเซลล์บนหลังคา"
-                    fill
-                    className="object-cover"
-                    priority
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                  {/* Floating Stats */}
-                  <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-lg">
-                    <div className="grid grid-cols-3 gap-4 text-center">
-                      <div>
-                        <div className="text-2xl font-bold text-orange-500">50-80%</div>
-                        <div className="text-xs text-gray-600">ลดค่าไฟ</div>
-                      </div>
-                      <div>
-                        <div className="text-2xl font-bold text-orange-500">4-6 ปี</div>
-                        <div className="text-xs text-gray-600">คืนทุน</div>
-                      </div>
-                      <div>
-                        <div className="text-2xl font-bold text-orange-500">25 ปี</div>
-                        <div className="text-xs text-gray-600">รับประกัน</div>
-                      </div>
+              {/* 5 Headers with Sub-headers */}
+              <div className="space-y-6 mb-8">
+                {[
+                  {
+                    header: 'ลดค่าไฟได้จริง สูงสุด 50–80%',
+                    subheader: 'ใช้ไฟจากแสงอาทิตย์ สบายใจหายห่วง',
+                  },
+                  {
+                    header: 'คืนทุนไว คุ้มระยะยาว',
+                    subheader: 'ประหยัดค่าไฟทุกเดือน ใช้ยาวหลายสิบปี',
+                  },
+                  {
+                    header: 'ระบบเสถียร ดูแลง่าย',
+                    subheader: 'ไม่มีปัญหาจุกจิกกวนใจ / ค่า Maintenance ต่ำ',
+                  },
+                  {
+                    header: 'เพิ่มมูลค่าให้บ้านและธุรกิจ',
+                    subheader: 'อาคารประหยัดพลังงาน ขายง่าย น่าเชื่อถือขึ้น',
+                  },
+                  {
+                    header: 'พลังงานสะอาด ดีต่อโลก ดีต่อภาพลักษณ์',
+                    subheader: 'ลดคาร์บอน สร้างอนาคตที่ยั่งยืน',
+                  },
+                ].map((item, index) => (
+                  <div key={index} className="flex items-start gap-3 group">
+                    <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg group-hover:scale-110 transition-transform">
+                      {index + 1}
+                    </div>
+                    <div className="flex-1">
+                      <h2 className="text-xl md:text-2xl font-bold text-white mb-1 leading-tight">
+                        {item.header}
+                      </h2>
+                      <p className="text-sm md:text-base text-gray-200 leading-relaxed">
+                        {item.subheader}
+                      </p>
                     </div>
                   </div>
+                ))}
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a
+                  href="https://line.me/R/ti/p/@solarpro"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-[#06C755] rounded-xl hover:bg-[#05b34b] transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
+                >
+                  <svg className="w-6 h-6 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+                  </svg>
+                  ปรึกษาฟรีทาง LINE
+                </a>
+                <a
+                  href="tel:0960415198"
+                  className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 rounded-xl hover:from-orange-500 hover:via-orange-600 hover:to-orange-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
+                >
+                  <Phone className="w-5 h-5 mr-2" />
+                  โทรเลย 096-041-5198
+                </a>
+              </div>
+
+              {/* Social Proof */}
+              <div className="flex items-center gap-6 pt-6 text-sm">
+                <div className="flex items-center gap-2 text-white">
+                  <span className="font-semibold">500+</span> ลูกค้าพึงพอใจ
+                </div>
+                <div className="flex items-center gap-1 text-white">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <Star key={i} className="w-4 h-4 fill-orange-400 text-orange-400" />
+                  ))}
+                  <span className="ml-1">4.9/5</span>
                 </div>
               </div>
             </div>
@@ -162,7 +161,7 @@ export default function AdsLandingPage() {
         </section>
 
         {/* Logo Carousel Section */}
-        <section className="py-12 bg-white border-y border-gray-200">
+        <section className="py-12 bg-gradient-to-r from-slate-50 via-gray-50 to-slate-50 border-y border-gray-200">
           <div className="container mx-auto px-6">
             <p className="text-center text-sm text-gray-500 mb-6">ไว้วางใจโดยแบรนด์ชั้นนำ</p>
             <div className="relative overflow-hidden">
@@ -186,9 +185,15 @@ export default function AdsLandingPage() {
         </section>
 
         {/* Pain Points Section */}
-        <section className="py-16 md:py-20 bg-gray-50">
-          <div className="container mx-auto px-6 md:px-12">
+        <section className="py-16 md:py-20 bg-gradient-to-br from-red-50 via-rose-50 to-red-100 relative">
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-red-200 rounded-full filter blur-3xl"></div>
+          </div>
+          <div className="container mx-auto px-6 md:px-12 relative z-10">
             <div className="text-center mb-12">
+              {/* <div className="inline-block bg-red-100 text-red-700 px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-sm">
+                ⚠️ ปัญหาที่พบบ่อย
+              </div> */}
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 คุณกำลังเจอปัญหาเหล่านี้อยู่ไหม?
               </h2>
@@ -227,7 +232,7 @@ export default function AdsLandingPage() {
               ].map((pain, index) => (
                 <div
                   key={index}
-                  className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 border-l-4 border-red-500"
+                  className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
                 >
                   <div className="text-4xl mb-3">{pain.icon}</div>
                   <h3 className="text-lg font-bold text-gray-900 mb-2">{pain.title}</h3>
@@ -250,9 +255,15 @@ export default function AdsLandingPage() {
         </section>
 
         {/* Benefits Section - Why Choose Us */}
-        <section className="py-16 md:py-20 bg-white">
-          <div className="container mx-auto px-6 md:px-12">
+        <section className="py-16 md:py-20 bg-gradient-to-br from-blue-50 via-sky-50 to-blue-100 relative">
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-blue-200 rounded-full filter blur-3xl"></div>
+          </div>
+          <div className="container mx-auto px-6 md:px-12 relative z-10">
             <div className="text-center mb-12">
+              {/* <div className="inline-block bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-sm">
+                ✨ จุดเด่นของเรา
+              </div> */}
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 ทำไมต้องเลือกเรา
               </h2>
@@ -310,9 +321,15 @@ export default function AdsLandingPage() {
         </section>
 
         {/* Services Section */}
-        <section className="py-16 md:py-20 bg-white">
-          <div className="container mx-auto px-6 md:px-12">
+        <section className="py-16 md:py-20 bg-gradient-to-br from-indigo-50 via-blue-50 to-indigo-100 relative">
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute top-1/3 right-1/3 w-96 h-96 bg-purple-200 rounded-full filter blur-3xl"></div>
+          </div>
+          <div className="container mx-auto px-6 md:px-12 relative z-10">
             <div className="text-center mb-12">
+              {/* <div className="inline-block bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-sm">
+                🔧 บริการครบวงจร
+              </div> */}
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 บริการของเรา
               </h2>
@@ -431,9 +448,15 @@ export default function AdsLandingPage() {
         </section>
 
         {/* Process Roadmap Section */}
-        <section className="py-16 md:py-20 bg-gray-50">
-          <div className="container mx-auto px-6 md:px-12">
+        <section className="py-16 md:py-20  bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100 relative">
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute bottom-1/3 right-1/4 w-96 h-96 rounded-full filter blur-3xl"></div>
+          </div>
+          <div className="container mx-auto px-6 md:px-12 relative z-10">
             <div className="text-center mb-12">
+              {/* <div className="inline-block bg-amber-100 text-amber-700 px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-sm">
+                📋 ขั้นตอนการทำงาน
+              </div> */}
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 ขั้นตอนการเข้ารับบริการ
               </h2>
@@ -591,9 +614,15 @@ export default function AdsLandingPage() {
         </section>
 
         {/* Solar Benefits Section */}
-        <section className="py-16 md:py-20 bg-white">
-          <div className="container mx-auto px-6 md:px-12">
+        <section className="py-16 md:py-20 bg-gradient-to-br from-emerald-50 via-green-50 to-emerald-100 relative">
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-emerald-200 rounded-full filter blur-3xl"></div>
+          </div>
+          <div className="container mx-auto px-6 md:px-12 relative z-10">
             <div className="text-center mb-12">
+              {/* <div className="inline-block bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-sm">
+                💡 ข้อดีที่คุณได้รับ
+              </div> */}
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 ข้อดีของโซล่าเซลล์
               </h2>
@@ -668,10 +697,16 @@ export default function AdsLandingPage() {
         </section>
 
         {/* Calculator Section */}
-        <section id="calculator" className="py-16 md:py-20 bg-gray-50">
-          <div className="container mx-auto px-6 md:px-12">
+        <section id="calculator" className="py-16 md:py-20 bg-gradient-to-br from-blue-50 via-sky-50 to-blue-100 relative">
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-orange-200 rounded-full filter blur-3xl"></div>
+          </div>
+          <div className="container mx-auto px-6 md:px-12 relative z-10">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
+                {/* <div className="inline-block bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-sm">
+                  🧮 คำนวณความคุ้มค่า
+                </div> */}
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                   คำนวณความคุ้มค่า
                 </h2>
@@ -688,9 +723,15 @@ export default function AdsLandingPage() {
         </section>
 
         {/* Reviews with Images Section */}
-        <section className="py-16 md:py-20 bg-white">
-          <div className="container mx-auto px-6 md:px-12">
+        <section className="py-16 md:py-20 bg-gradient-to-br from-indigo-50 via-blue-50 to-indigo-100 relative">
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-indigo-200 rounded-full filter blur-3xl"></div>
+          </div>
+          <div className="container mx-auto px-6 md:px-12 relative z-10">
             <div className="text-center mb-12">
+              {/* <div className="inline-block bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-sm">
+                ⭐ ความคิดเห็นลูกค้า
+              </div> */}
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 ลูกค้าพูดถึงเรา
               </h2>
@@ -797,10 +838,16 @@ export default function AdsLandingPage() {
         {/* Contact Form - Removed */}
 
         {/* FAQ Section */}
-        <section className="py-16 md:py-20 bg-gray-50">
-          <div className="container mx-auto px-6 md:px-12">
+        <section className="py-16 md:py-20 bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100 relative">
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute bottom-1/3 right-1/3 w-96 h-96 bg-slate-200 rounded-full filter blur-3xl"></div>
+          </div>
+          <div className="container mx-auto px-6 md:px-12 relative z-10">
             <div className="max-w-3xl mx-auto">
               <div className="text-center mb-12">
+                {/* <div className="inline-block bg-slate-100 text-slate-700 px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-sm">
+                  ❓ คำถามที่พบบ่อย
+                </div> */}
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                   คำถามที่พบบ่อย
                 </h2>
@@ -863,9 +910,9 @@ export default function AdsLandingPage() {
                   <span className="text-xs text-gray-400">โซลูชั่นพลังงานแสงอาทิตย์</span>
                 </div>
               </div>
-              <p className="text-gray-400 leading-relaxed text-sm">
-                ผู้นำด้านการติดตั้งระบบโซล่าเซลล์ มอบโซลูชั่นพลังงานสะอาดและหมุนเวียนสำหรับบ้านและธุรกิจ
-              </p>
+              <li className="flex items-start space-x-3">
+                <address className="not-italic">123 ถนนพลังงาน แขวงสุขุมวิท เขตวัฒนา กรุงเทพฯ 10110</address>
+              </li>
             </div>
 
             {/* Quick Links */}
@@ -916,10 +963,6 @@ export default function AdsLandingPage() {
                   >
                     info@solarpro.co.th
                   </a>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <MapPin className="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" />
-                  <address className="not-italic">123 ถนนพลังงาน แขวงสุขุมวิท เขตวัฒนา กรุงเทพฯ 10110</address>
                 </li>
               </ul>
             </div>
