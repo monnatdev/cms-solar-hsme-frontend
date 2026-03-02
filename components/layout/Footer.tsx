@@ -1,3 +1,6 @@
+'use client';
+
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Facebook, Twitter, Instagram, Linkedin, Phone, Mail, MapPin, Sun } from 'lucide-react';
 
@@ -60,6 +63,12 @@ export default function Footer({
   socialLinks = defaultSocialLinks 
 }: FooterProps = {}) {
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname();
+
+  // Don't show footer on /ads page (it has its own footer)
+  if (pathname === '/ads') {
+    return null;
+  }
 
   return (
     <footer className="bg-[#0F172A] text-gray-300">

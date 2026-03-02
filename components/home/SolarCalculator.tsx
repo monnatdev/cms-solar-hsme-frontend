@@ -2,13 +2,11 @@
 
 import { useState } from 'react';
 import {
-  calculateSolarSystem,
-  validateCalculatorInput,
   formatCurrency,
   formatCapacity,
   formatPaybackPeriod,
 } from '@/lib/utils/calculator';
-import type { CalculatorFormData, CalculatorResult, LocationType, ElectricSystem } from '@/types/calculator';
+import type { CalculatorFormData, CalculatorResult, LocationType } from '@/types/calculator';
 
 export default function SolarCalculator() {
   const [formData, setFormData] = useState<CalculatorFormData>({
@@ -28,25 +26,16 @@ export default function SolarCalculator() {
     setError(null);
   };
 
-  const handleElectricSystemChange = (system: ElectricSystem) => {
-    setFormData({ ...formData, electricSystem: system });
-    setResult(null);
-    setError(null);
+  const formatNumberWithCommas = (num: number): string => {
+    if (num === 0) return '';
+    return num.toLocaleString('en-US');
   };
 
   const handleMonthlyBillChange = (value: string) => {
+    // Remove commas from input
+    const cleanValue = value.replace(/,/g, '');
+    
     // If empty string, set to empty (will show placeholder)
-    if (value === '') {
-      setFormData({ ...formData, monthlyBill: 0 });
-      setResult(null);
-      setError(null);
-      return;
-    }
-    
-    // Remove all leading zeros
-    const cleanValue = value.replace(/^0+/, '');
-    
-    // If after removing zeros we have empty string, it means user typed only zeros
     if (cleanValue === '') {
       setFormData({ ...formData, monthlyBill: 0 });
       setResult(null);
@@ -54,8 +43,19 @@ export default function SolarCalculator() {
       return;
     }
     
+    // Remove all leading zeros
+    const noLeadingZeros = cleanValue.replace(/^0+/, '');
+    
+    // If after removing zeros we have empty string, it means user typed only zeros
+    if (noLeadingZeros === '') {
+      setFormData({ ...formData, monthlyBill: 0 });
+      setResult(null);
+      setError(null);
+      return;
+    }
+    
     // Convert to number
-    const numValue = parseFloat(cleanValue) || 0;
+    const numValue = parseFloat(noLeadingZeros) || 0;
     setFormData({ ...formData, monthlyBill: numValue });
     setResult(null);
     setError(null);
@@ -72,17 +72,55 @@ export default function SolarCalculator() {
     setError(null);
 
     // Validate input
-    const validationErrors = validateCalculatorInput(formData);
-    if (validationErrors.length > 0) {
-      setError(validationErrors[0].message);
+    if (!formData.monthlyBill || formData.monthlyBill <= 0) {
+      setError('กรุณาใส่ค่าไฟที่ถูกต้อง');
       setIsCalculating(false);
       return;
     }
 
     try {
-      // Calculate result
-      const calculationResult = calculateSolarSystem(formData);
-      setResult(calculationResult);
+      // คำนวณค่าไฟกลางวัน (On-grid ใช้แค่กลางวัน)
+      const dayTimeBill = formData.monthlyBill * (formData.dayNightRatio / 100);
+      
+      // ทุก 5 kW ประหยัด 3,000 บาท
+      // หมายความว่า 1 kW ประหยัด 600 บาท
+      const savingsPerKW = 600;
+      
+      // คำนวณขนาดระบบที่ต้องการ
+      const requiredKW = dayTimeBill / savingsPerKW;
+      
+      // ขนาดระบบที่แนะนำ: 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50
+      const availableSizes = [3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+      let recommendedCapacity = 3; // ขั้นต่ำ
+      
+      // หาขนาดที่เหมาะสม (ปัดขึ้น)
+      for (const size of availableSizes) {
+        if (requiredKW <= size) {
+          recommendedCapacity = size;
+          break;
+        }
+        recommendedCapacity = size; // ถ้าเกิน 50 ให้ใช้ 50
+      }
+      
+      // คำนวณการประหยัด (ตามขนาดระบบที่แนะนำ)
+      const monthlySavings = recommendedCapacity * savingsPerKW;
+      const yearlySavings = monthlySavings * 12;
+      
+      // ราคาติดตั้ง (ประมาณ 50,000 บาทต่อ kW)
+      const pricePerKW = 50000;
+      const estimatedCost = recommendedCapacity * pricePerKW;
+      
+      // คำนวณระยะเวลาคืนทุน
+      const paybackPeriod = estimatedCost / yearlySavings;
+
+      setResult({
+        recommendedCapacity,
+        estimatedCost,
+        monthlySavings,
+        yearlySavings,
+        paybackPeriod,
+        co2Reduction: 0, // ไม่ใช้ในการแสดงผล
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'เกิดข้อผิดพลาดในการคำนวณ');
     } finally {
@@ -158,44 +196,16 @@ export default function SolarCalculator() {
               </label>
               <input
                 id="monthlyBill"
-                type="number"
-                min="0"
-                step="100"
-                value={formData.monthlyBill === 0 ? '' : formData.monthlyBill}
+                type="text"
+                inputMode="numeric"
+                value={formatNumberWithCommas(formData.monthlyBill)}
                 onChange={(e) => handleMonthlyBillChange(e.target.value)}
                 className="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-all"
-                placeholder="กรอกค่าไฟฟ้าต่อเดือน"
+                placeholder="เช่น 10,000"
               />
               <p className="mt-2 text-sm text-gray-500">
                 ค่าไฟฟ้าเฉลี่ยต่อเดือนจากบิลไฟฟ้าของคุณ
               </p>
-            </div>
-
-            {/* Electric System */}
-            <div className="mb-8">
-              <label className="block text-lg font-semibold text-gray-900 mb-4">
-                ระบบไฟฟ้า
-              </label>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {[
-                  { value: 'single-phase' as ElectricSystem, label: 'ไฟฟ้า 1 เฟส', description: 'สำหรับบ้านพักอาศัยทั่วไป' },
-                  { value: 'three-phase' as ElectricSystem, label: 'ไฟฟ้า 3 เฟส', description: 'สำหรับอาคารพาณิชย์และโรงงาน' },
-                ].map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => handleElectricSystemChange(option.value)}
-                    className={`p-4 rounded-lg border-2 text-left transition-all duration-200 ${
-                      formData.electricSystem === option.value
-                        ? 'border-orange-400 bg-orange-50 shadow-md'
-                        : 'border-gray-200 hover:border-orange-300 hover:bg-gray-50'
-                    }`}
-                  >
-                    <div className="font-medium text-gray-900 mb-1">{option.label}</div>
-                    <div className="text-sm text-gray-600">{option.description}</div>
-                  </button>
-                ))}
-              </div>
             </div>
 
             {/* Day/Night Ratio Slider */}
@@ -221,22 +231,12 @@ export default function SolarCalculator() {
                   }}
                 />
                 <div className="flex justify-between mt-3 text-sm text-gray-600">
-                  <span className="flex items-center gap-1">
-                    <svg className="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-                    </svg>
-                    0% (ใช้กลางคืนทั้งหมด)
-                  </span>
-                  <span className="flex items-center gap-1">
-                    100% (ใช้กลางวันทั้งหมด)
-                    <svg className="w-5 h-5 text-orange-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clipRule="evenodd" />
-                    </svg>
-                  </span>
+                  <span>กลางคืน {100 - formData.dayNightRatio}%</span>
+                  <span>กลางวัน {formData.dayNightRatio}%</span>
                 </div>
               </div>
               <p className="mt-3 text-sm text-gray-500">
-                ระบุสัดส่วนการใช้ไฟฟ้าในช่วงกลางวัน (06:00-18:00) เพื่อประเมินประสิทธิภาพโซล่าเซลล์
+                ระบบ On-grid จะประหยัดค่าไฟในช่วงกลางวันเท่านั้น (06:00-18:00)
               </p>
             </div>
 
@@ -300,7 +300,9 @@ export default function SolarCalculator() {
                 {/* Additional Info */}
                 <div className="mt-6 p-4 bg-orange-50 rounded-lg">
                   <p className="text-sm text-gray-700">
-                    <strong>หมายเหตุ:</strong> ผลการคำนวณเป็นเพียงการประมาณการเบื้องต้น 
+                    <strong>หมายเหตุ:</strong> ระบบ On-grid ประหยัดค่าไฟในช่วงกลางวันเท่านั้น 
+                    ทุก 5 kW ประหยัดได้ประมาณ 3,000 บาท/เดือน 
+                    ผลการคำนวณเป็นเพียงการประมาณการเบื้องต้น 
                     ค่าใช้จ่ายและผลประหยัดจริงอาจแตกต่างกันไปตามสภาพพื้นที่ติดตั้ง 
                     คุณภาพอุปกรณ์ และปัจจัยอื่นๆ กรุณาติดต่อเราเพื่อรับคำปรึกษาและใบเสนอราคาที่แม่นยำ
                   </p>

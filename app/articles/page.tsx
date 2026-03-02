@@ -32,9 +32,17 @@ export default async function ArticlesPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Page Header with Dark Blue */}
-      <header className="bg-[#0F172A] text-white">
-        <div className="container mx-auto px-6 py-8">
+      {/* Page Header with Background Image */}
+      <header className="relative overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1432821596592-e2c18b78144f?q=80&w=2070&auto=format&fit=crop"
+            alt="Knowledge and articles"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/85 via-slate-900/75 to-slate-900/85"></div>
+        </div>
+        <div className="relative container mx-auto px-6 py-8">
           {/* Breadcrumb */}
           <Breadcrumb
             items={[
@@ -45,10 +53,10 @@ export default async function ArticlesPage() {
           
           {/* Header Content */}
           <div className="text-center space-y-4 mt-8">
-            <h1 className="text-4xl md:text-5xl font-bold">
+            <h1 className="text-4xl md:text-5xl font-bold text-white">
               บทความและความรู้
             </h1>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-100 max-w-2xl mx-auto">
               เรียนรู้เกี่ยวกับระบบโซล่าเซลล์ พลังงานแสงอาทิตย์ และเทคโนโลยีพลังงานสะอาด
             </p>
           </div>

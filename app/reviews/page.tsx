@@ -47,9 +47,17 @@ export default async function ReviewsPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Page Header with Dark Blue */}
-      <header className="bg-[#0F172A] text-white">
-        <div className="container mx-auto px-6 py-8">
+      {/* Page Header with Background Image */}
+      <header className="relative overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1497440001374-f26997328c1b?q=80&w=2072&auto=format&fit=crop"
+            alt="Solar installation portfolio"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/85 via-slate-900/75 to-slate-900/85"></div>
+        </div>
+        <div className="relative container mx-auto px-6 py-8">
           {/* Breadcrumb */}
           <Breadcrumb
             items={[
@@ -60,10 +68,10 @@ export default async function ReviewsPage() {
           
           {/* Header Content */}
           <div className="text-center space-y-4 mt-8">
-            <h1 className="text-4xl md:text-5xl font-bold">
+            <h1 className="text-4xl md:text-5xl font-bold text-white">
               ผลงานการติดตั้ง
             </h1>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-100 max-w-2xl mx-auto">
               ชมผลงานการติดตั้งโซล่าเซลล์ล่าสุดของเรา
             </p>
           </div>

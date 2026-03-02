@@ -5,6 +5,7 @@ import { TrendingUp, Zap, DollarSign, Calendar } from 'lucide-react';
 
 export default function SimpleCalculator() {
   const [monthlyBill, setMonthlyBill] = useState<string>('');
+  const [dayUsagePercent, setDayUsagePercent] = useState<number>(60);
   const [result, setResult] = useState<{
     systemSize: number;
     monthlySavings: number;
@@ -13,28 +14,59 @@ export default function SimpleCalculator() {
     paybackYears: number;
   } | null>(null);
 
-  const calculateSavings = () => {
+  const formatNumberWithCommas = (value: string): string => {
+    // Remove all non-digit characters
+    const cleanValue = value.replace(/\D/g, '');
+    if (cleanValue === '') return '';
+    
+    // Convert to number and format with commas
+    const num = parseInt(cleanValue, 10);
+    return num.toLocaleString('en-US');
+  };
+
+  const handleInputChange = (value: string) => {
+    // Remove commas and store clean value
+    const cleanValue = value.replace(/,/g, '');
+    setMonthlyBill(cleanValue);
+  };
+
+  const calculateSavings = (dayUsagePercent: number = 60) => {
     const bill = parseFloat(monthlyBill);
     if (!bill || bill <= 0) {
       alert('กรุณาใส่ค่าไฟที่ถูกต้อง');
       return;
     }
 
-    // คำนวณตามสูตร
-    // สมมติใช้ไฟ 60% ในเวลากลางวัน
-    const dayUsagePercent = 0.6;
+    // คำนวณค่าไฟกลางวัน (On-grid ใช้แค่กลางวัน)
+    const dayTimeBill = bill * (dayUsagePercent / 100);
     
-    // คำนวณขนาดระบบ (3.0 kW สำหรับค่าไฟ ~3000 บาท)
-    const systemSize = Math.round((bill / 1000) * 10) / 10; // ประมาณ 1 kW ต่อ 1000 บาท
+    // ทุก 5 kW ประหยัด 3,000 บาท
+    // หมายความว่า 1 kW ประหยัด 600 บาท
+    const savingsPerKW = 600;
     
-    // คำนวณการประหยัด (60% ของค่าไฟ)
-    const savingsPercent = dayUsagePercent;
-    const monthlySavings = Math.round(bill * savingsPercent);
+    // คำนวณขนาดระบบที่ต้องการ
+    const requiredKW = dayTimeBill / savingsPerKW;
+    
+    // ขนาดระบบที่แนะนำ: 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50
+    const availableSizes = [3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+    let systemSize = 3; // ขั้นต่ำ
+    
+    // หาขนาดที่เหมาะสม (ปัดขึ้น)
+    for (const size of availableSizes) {
+      if (requiredKW <= size) {
+        systemSize = size;
+        break;
+      }
+      systemSize = size; // ถ้าเกิน 50 ให้ใช้ 50
+    }
+    
+    // คำนวณการประหยัด (ตามขนาดระบบที่แนะนำ)
+    const monthlySavings = systemSize * savingsPerKW;
     const yearlySavings = monthlySavings * 12;
     
     // ราคาติดตั้ง (ประมาณ 50,000 บาทต่อ kW)
     const pricePerKW = 50000;
-    const estimatedCost = Math.round(systemSize * pricePerKW);
+    const estimatedCost = systemSize * pricePerKW;
     
     // คำนวณระยะเวลาคืนทุน
     const paybackYears = parseFloat((estimatedCost / yearlySavings).toFixed(1));
@@ -62,15 +94,16 @@ export default function SimpleCalculator() {
               ค่าไฟฟ้าต่อเดือนของคุณ (บาท)
             </label>
             <input
-              type="number"
-              value={monthlyBill}
-              onChange={(e) => setMonthlyBill(e.target.value)}
+              type="text"
+              inputMode="numeric"
+              value={formatNumberWithCommas(monthlyBill)}
+              onChange={(e) => handleInputChange(e.target.value)}
               onKeyPress={(e) => {
                 if (e.key === 'Enter') {
-                  calculateSavings();
+                  calculateSavings(dayUsagePercent);
                 }
               }}
-              placeholder="เช่น 3,000"
+              placeholder="เช่น 10,000"
               className="w-full px-6 py-4 text-2xl font-bold text-center border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-all"
             />
             <p className="mt-2 text-sm text-gray-500 text-center">
@@ -78,8 +111,37 @@ export default function SimpleCalculator() {
             </p>
           </div>
 
+          {/* Day/Night Usage Slider */}
+          <div>
+            <div className="flex justify-between items-center mb-3">
+              <label className="text-lg font-semibold text-gray-900">
+                สัดส่วนการใช้ไฟกลางวัน
+              </label>
+              <span className="text-2xl font-bold text-orange-500">{dayUsagePercent}%</span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              step="5"
+              value={dayUsagePercent}
+              onChange={(e) => setDayUsagePercent(parseInt(e.target.value))}
+              className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+              style={{
+                background: `linear-gradient(to right, #FFA726 0%, #FFA726 ${dayUsagePercent}%, #e5e7eb ${dayUsagePercent}%, #e5e7eb 100%)`,
+              }}
+            />
+            <div className="flex justify-between mt-2 text-sm text-gray-600">
+              <span>กลางคืน {100 - dayUsagePercent}%</span>
+              <span>กลางวัน {dayUsagePercent}%</span>
+            </div>
+            <p className="mt-2 text-sm text-gray-500 text-center">
+              ระบบ On-grid จะประหยัดค่าไฟในช่วงกลางวันเท่านั้น
+            </p>
+          </div>
+
           <button
-            onClick={calculateSavings}
+            onClick={() => calculateSavings(dayUsagePercent)}
             className="w-full py-4 px-6 text-lg font-semibold text-white bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 rounded-lg hover:from-orange-500 hover:via-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             คำนวณเลย
@@ -178,7 +240,8 @@ export default function SimpleCalculator() {
               <div className="flex-1">
                 <p className="text-sm font-semibold text-gray-900 mb-2">หมายเหตุ:</p>
                 <ul className="text-sm text-gray-700 space-y-1">
-                  <li>• การคำนวณนี้สมมติว่าคุณใช้ไฟ 60% ในเวลากลางวัน</li>
+                  <li>• ระบบ On-grid ประหยัดค่าไฟในช่วงกลางวันเท่านั้น</li>
+                  <li>• ทุก 5 kW ประหยัดได้ประมาณ 3,000 บาท/เดือน</li>
                   <li>• ผลลัพธ์เป็นการประมาณการเบื้องต้น</li>
                   <li>• ค่าใช้จ่ายจริงขึ้นอยู่กับสภาพพื้นที่และอุปกรณ์ที่เลือก</li>
                   <li>• ติดต่อเราเพื่อรับใบเสนอราคาที่แม่นยำ</li>
