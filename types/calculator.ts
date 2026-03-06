@@ -30,6 +30,8 @@ export interface CalculatorResult {
   estimatedCost: number; // THB
   paybackPeriod: number; // years
   monthlySavings: number; // THB
+  yearlySavings: number; // THB
+  co2Reduction: number; // kg CO2 per year
 }
 
 /**

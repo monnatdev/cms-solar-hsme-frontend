@@ -169,6 +169,8 @@ export function calculateSolarSystem(
     estimatedCost: Math.round(estimatedCost), // Whole number
     paybackPeriod: Math.round(paybackPeriod * 10) / 10, // 1 decimal place
     monthlySavings: Math.round(monthlySavings), // Whole number
+    yearlySavings: Math.round(annualSavings), // Whole number
+    co2Reduction: Math.round(roundedCapacity * 1200), // Approximate kg CO2 per year per kW
   };
 }
 
