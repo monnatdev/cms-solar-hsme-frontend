@@ -163,18 +163,38 @@ export default function AdsLandingPage() {
         {/* Logo Carousel Section */}
         <section className="py-12 bg-gradient-to-r from-slate-50 via-gray-50 to-slate-50 border-y border-gray-200">
           <div className="container mx-auto px-6">
-            <p className="text-center text-sm text-gray-500 mb-6">ไว้วางใจโดยแบรนด์ชั้นนำ</p>
+            {/* <p className="text-center text-sm text-gray-500 mb-6">ไว้วางใจโดยแบรนด์ชั้นนำ</p> */}
             <div className="relative overflow-hidden">
               <div className="flex animate-scroll">
                 {/* Duplicate logos for seamless loop */}
                 {[...Array(2)].map((_, setIndex) => (
                   <div key={setIndex} className="flex items-center gap-12 px-6">
-                    {['Logo 1', 'Logo 2', 'Logo 3', 'Logo 4', 'Logo 5', 'Logo 6'].map((logo, index) => (
+                    {[
+                      'abb.logo.png',
+                      'ccs.logo.png',
+                      'chnt.logo.png',
+                      'deye.logo.png',
+                      'hoymiles.logo.png',
+                      'huawei.logo.png',
+                      'ja.logo.png',
+                      'jinko.logo.png',
+                      'link.logo.png',
+                      'schnider.logo.png',
+                      'suntree.logo.png',
+                      'tier1.logo.png',
+                      'yazak.logo.png',
+                    ].map((logo, index) => (
                       <div
                         key={index}
-                        className="flex-shrink-0 w-32 h-16 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400 text-sm font-medium"
+                        className="flex-shrink-0 w-32 h-16 relative"
                       >
-                        {logo}
+                        <Image
+                          src={`/logos/${logo}`}
+                          alt={`Partner logo ${logo.replace('.logo.png', '')}`}
+                          fill
+                          className="object-contain"
+                          sizes="128px"
+                        />
                       </div>
                     ))}
                   </div>
@@ -913,6 +933,22 @@ export default function AdsLandingPage() {
               <li className="flex items-start space-x-3">
                 <address className="not-italic">123 ถนนพลังงาน แขวงสุขุมวิท เขตวัฒนา กรุงเทพฯ 10110</address>
               </li>
+              
+              {/* Tax ID with Logo */}
+              <div className="flex items-center gap-3">
+                <div className="relative w-16 h-16 flex-shrink-0">
+                  <Image
+                    src="/logos/dbd.png"
+                    alt="DBD Verified"
+                    fill
+                    className="object-contain"
+                    sizes="64px"
+                  />
+                </div>
+                <div>
+                  <p className="text-gray-300">เลขประจำตัวผู้เสียภาษี 0105567225881</p>
+                </div>
+              </div>
             </div>
 
             {/* Quick Links */}
