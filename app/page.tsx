@@ -7,6 +7,7 @@ import { getAllPublishedArticles } from '@/lib/api/articles';
 import ServiceCardSimple from '@/components/services/ServiceCardSimple';
 import ReviewCardSimple from '@/components/reviews/ReviewCardSimple';
 import ArticleCardSimple from '@/components/articles/ArticleCardSimple';
+import Carousel from '@/components/common/Carousel';
 
 // Code splitting: Dynamically import heavy client components
 const SolarCalculator = dynamic(() => import('@/components/home/SolarCalculator'), {
@@ -55,10 +56,10 @@ export default async function Home() {
     console.error('Error fetching content:', error);
   }
 
-  // Limit to 3 items each for home page
-  const featuredServices = services.slice(0, 3);
-  const featuredReviews = reviews.slice(0, 4);
-  const featuredArticles = articles.slice(0, 3);
+  // Show more items for carousel
+  const featuredServices = services.slice(0, 6);
+  const featuredReviews = reviews.slice(0, 8);
+  const featuredArticles = articles.slice(0, 6);
 
   return (
     <div className="min-h-screen">
@@ -93,7 +94,12 @@ export default async function Home() {
 
           {featuredServices.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+              <Carousel
+                itemsPerView={{ mobile: 1, tablet: 2, desktop: 3 }}
+                gap={32}
+                showArrows={true}
+                showDots={true}
+              >
                 {featuredServices.map((service: any) => (
                   <ServiceCardSimple
                     key={service.id}
@@ -103,9 +109,9 @@ export default async function Home() {
                     header={service.header}
                   />
                 ))}
-              </div>
+              </Carousel>
 
-              <div className="text-center">
+              <div className="text-center mt-8">
                 <Link
                   href="/services"
                   className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-gray-700 bg-white border-2 border-gray-300 rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-all duration-300"
@@ -145,7 +151,12 @@ export default async function Home() {
 
           {featuredReviews.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              <Carousel
+                itemsPerView={{ mobile: 1, tablet: 2, desktop: 4 }}
+                gap={24}
+                showArrows={true}
+                showDots={true}
+              >
                 {featuredReviews.map((review: any) => (
                   <ReviewCardSimple
                     key={review.id}
@@ -159,9 +170,9 @@ export default async function Home() {
                     } : undefined}
                   />
                 ))}
-              </div>
+              </Carousel>
 
-              <div className="text-center">
+              <div className="text-center mt-8">
                 <Link
                   href="/reviews"
                   className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-gray-700 bg-white border-2 border-gray-300 rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-all duration-300"
@@ -201,7 +212,12 @@ export default async function Home() {
 
           {featuredArticles.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+              <Carousel
+                itemsPerView={{ mobile: 1, tablet: 2, desktop: 3 }}
+                gap={32}
+                showArrows={true}
+                showDots={true}
+              >
                 {featuredArticles.map((article: any) => (
                   <ArticleCardSimple
                     key={article.id}
@@ -213,9 +229,9 @@ export default async function Home() {
                     publishedDate={article.publishedDate}
                   />
                 ))}
-              </div>
+              </Carousel>
 
-              <div className="text-center">
+              <div className="text-center mt-8">
                 <Link
                   href="/articles"
                   className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-gray-700 bg-white border-2 border-gray-300 rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-all duration-300"

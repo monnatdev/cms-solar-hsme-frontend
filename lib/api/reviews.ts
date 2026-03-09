@@ -68,10 +68,14 @@ export async function getReviewById(id: string): Promise<Review> {
  */
 export async function getReviewBySlug(slug: string): Promise<Review | null> {
   try {
-    const response = await getReviews({
-      slug,
-      limit: 1,
-    });
+    const queryParams = new URLSearchParams();
+    queryParams.append('where[slug][equals]', slug);
+    queryParams.append('where[status][equals]', 'published');
+    queryParams.append('limit', '1');
+    
+    const response = await payloadFetch<PaginatedResponse<Review>>(
+      `/api/reviews?${queryParams.toString()}`
+    );
     
     if (response.docs.length === 0) {
       return null;
@@ -98,10 +102,27 @@ export async function getReviewBySlug(slug: string): Promise<Review | null> {
 export async function getPublishedReviews(
   params?: Omit<ReviewQueryParams, 'status'>
 ): Promise<PaginatedResponse<Review>> {
-  return getReviews({
-    ...params,
-    status: 'published',
-  });
+  try {
+    const queryParams = new URLSearchParams();
+    
+    // Add status filter using Payload CMS where clause
+    queryParams.append('where[status][equals]', 'published');
+    
+    // Add other params
+    if (params?.limit) queryParams.append('limit', String(params.limit));
+    if (params?.page) queryParams.append('page', String(params.page));
+    if (params?.sort) queryParams.append('sort', params.sort);
+    if (params?.relatedService) queryParams.append('where[relatedService][equals]', params.relatedService);
+    
+    const queryString = queryParams.toString();
+    const response = await payloadFetch<PaginatedResponse<Review>>(
+      `/api/reviews?${queryString}`
+    );
+    return response;
+  } catch (error) {
+    console.error('Failed to fetch published reviews:', error);
+    throw error;
+  }
 }
 
 /**
@@ -142,11 +163,27 @@ export async function getPublishedReviewsByService(
   serviceId: string,
   params?: Omit<ReviewQueryParams, 'relatedService' | 'status'>
 ): Promise<PaginatedResponse<Review>> {
-  return getReviews({
-    ...params,
-    relatedService: serviceId,
-    status: 'published',
-  });
+  try {
+    const queryParams = new URLSearchParams();
+    
+    // Add status and service filters using Payload CMS where clause
+    queryParams.append('where[status][equals]', 'published');
+    queryParams.append('where[relatedService][equals]', serviceId);
+    
+    // Add other params
+    if (params?.limit) queryParams.append('limit', String(params.limit));
+    if (params?.page) queryParams.append('page', String(params.page));
+    if (params?.sort) queryParams.append('sort', params.sort);
+    
+    const queryString = queryParams.toString();
+    const response = await payloadFetch<PaginatedResponse<Review>>(
+      `/api/reviews?${queryString}`
+    );
+    return response;
+  } catch (error) {
+    console.error('Failed to fetch published reviews by service:', error);
+    throw error;
+  }
 }
 
 /**

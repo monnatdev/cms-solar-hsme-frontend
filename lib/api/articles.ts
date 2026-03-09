@@ -69,7 +69,7 @@ export async function getArticleById(id: string): Promise<Article> {
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
   try {
     const response = await payloadFetch<PaginatedResponse<Article>>(
-      `/api/articles?where[slug][equals]=${encodeURIComponent(slug)}&limit=1`
+      `/api/articles?where[slug][equals]=${encodeURIComponent(slug)}&where[status][equals]=published&limit=1`
     );
     
     if (response.docs.length === 0) {
@@ -97,10 +97,26 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
 export async function getPublishedArticles(
   params?: Omit<ArticleQueryParams, 'status'>
 ): Promise<PaginatedResponse<Article>> {
-  return getArticles({
-    ...params,
-    status: 'published',
-  });
+  try {
+    const queryParams = new URLSearchParams();
+    
+    // Add status filter using Payload CMS where clause
+    queryParams.append('where[status][equals]', 'published');
+    
+    // Add other params
+    if (params?.limit) queryParams.append('limit', String(params.limit));
+    if (params?.page) queryParams.append('page', String(params.page));
+    if (params?.sort) queryParams.append('sort', params.sort);
+    
+    const queryString = queryParams.toString();
+    const response = await payloadFetch<PaginatedResponse<Article>>(
+      `/api/articles?${queryString}`
+    );
+    return response;
+  } catch (error) {
+    console.error('Failed to fetch published articles:', error);
+    throw error;
+  }
 }
 
 /**

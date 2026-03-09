@@ -69,7 +69,7 @@ export async function getServiceById(id: string): Promise<Service> {
 export async function getServiceBySlug(slug: string): Promise<Service | null> {
   try {
     const response = await payloadFetch<PaginatedResponse<Service>>(
-      `/api/services?where[slug][equals]=${encodeURIComponent(slug)}&limit=1`
+      `/api/services?where[slug][equals]=${encodeURIComponent(slug)}&where[status][equals]=published&limit=1`
     );
     
     if (response.docs.length === 0) {
@@ -97,10 +97,26 @@ export async function getServiceBySlug(slug: string): Promise<Service | null> {
 export async function getPublishedServices(
   params?: Omit<ServiceQueryParams, 'status'>
 ): Promise<PaginatedResponse<Service>> {
-  return getServices({
-    ...params,
-    status: 'published',
-  });
+  try {
+    const queryParams = new URLSearchParams();
+    
+    // Add status filter using Payload CMS where clause
+    queryParams.append('where[status][equals]', 'published');
+    
+    // Add other params
+    if (params?.limit) queryParams.append('limit', String(params.limit));
+    if (params?.page) queryParams.append('page', String(params.page));
+    if (params?.sort) queryParams.append('sort', params.sort);
+    
+    const queryString = queryParams.toString();
+    const response = await payloadFetch<PaginatedResponse<Service>>(
+      `/api/services?${queryString}`
+    );
+    return response;
+  } catch (error) {
+    console.error('Failed to fetch published services:', error);
+    throw error;
+  }
 }
 
 /**

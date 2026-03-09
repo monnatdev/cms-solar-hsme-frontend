@@ -205,32 +205,6 @@ export default async function ReviewDetailPage({
             </div>
           </section>
         )}
-
-        {/* Call to Action Section */}
-        <section className="bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 rounded-2xl p-8 md:p-12 text-center shadow-xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            ต้องการงานคุณภาพแบบนี้?
-          </h2>
-          <p className="text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
-            ติดต่อเราวันนี้เพื่อเริ่มโปรเจกต์ของคุณ
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/#contact"
-              className="inline-block px-8 py-4 bg-white text-orange-600 font-semibold rounded-lg hover:bg-orange-50 transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-            >
-              ติดต่อเรา
-            </a>
-            {relatedService && (
-              <Link
-                href={`/services/${relatedService.slug}`}
-                className="inline-block px-8 py-4 bg-orange-700 text-white font-semibold rounded-lg hover:bg-orange-800 transition-colors duration-200 border-2 border-white"
-              >
-                ดูบริการ {relatedService.title}
-              </Link>
-            )}
-          </div>
-        </section>
       </article>
 
       {/* Related Reviews Section */}
